@@ -21,6 +21,9 @@ const displayCategoryButton = (categories) => {
 
 };
 
+const countNews = (newsLength) => {
+    document.getElementById('found-news-container').innerText = `${newsLength} news found`;
+}
 
 const getNewsById = async (category_id) => {
     toggleSpinner(true);
@@ -35,6 +38,7 @@ const getNewsById = async (category_id) => {
 
 }
 const displayNews = (allNews) => {
+    countNews(allNews.length);
     const categoryContainer = document.getElementById('all-news-container');
     categoryContainer.textContent = ``;
     if (allNews.length === 0) {
