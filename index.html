@@ -62,7 +62,7 @@
 
     <!-- main part start -->
     <main class="container">
-        <div id="categories-btn-container" class="d-flex justify-content-evenly mb-3">
+        <div id="categories-btn-container" class="d-flex flex-wrap justify-content-evenly mb-3">
 
         </div>
 
@@ -73,7 +73,26 @@
             </div>
         </div>
         <!-- spinner end -->
-        <div id="categories-container">
+
+        <!-- modal start -->
+        <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+            tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div id="modal-container" class="modal-content">
+                    <div id="news-title" class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div id="news-details" class="modal-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- modal end -->
+
+        <div id="all-news-container">
 
         </div>
 

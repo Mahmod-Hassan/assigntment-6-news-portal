@@ -1,15 +1,20 @@
-const category = () => {
+const loadCategoryButton = () => {
     fetch('https://openapi.programming-hero.com/api/news/categories')
         .then(res => res.json())
         .then(data => displayCategoryButton(data.data.news_category
         ))
-}
+        .catch(err => {
+            throw (err);
+        })
+};
+loadCategoryButton();
+
 const displayCategoryButton = (categories) => {
     const categoryButtonContainer = document.getElementById('categories-btn-container');
     categories.forEach(category => {
         const div = document.createElement('div');
         div.innerHTML = `
-        <button onclick=getCategoryById("${category.category_id}") class='btn'>${category.category_name}</button>
+        <button onclick=getNewsById("${category.category_id}") class='btn'>${category.category_name}</button>
         `
         categoryButtonContainer.appendChild(div);
     })
@@ -17,26 +22,31 @@ const displayCategoryButton = (categories) => {
 };
 
 
-const getCategoryById = async (category_id) => {
+const getNewsById = async (category_id) => {
     toggleSpinner(true);
     const url = `https://openapi.programming-hero.com/api/news/category/${category_id}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    displayCategories(data.data);
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        displayNews(data.data);
+    } catch (err) {
+        throw (err)
+    }
+
 }
-const displayCategories = (categoryItem) => {
-    const categoryContainer = document.getElementById('categories-container');
+const displayNews = (allNews) => {
+    const categoryContainer = document.getElementById('all-news-container');
     categoryContainer.textContent = ``;
-    if (categoryItem.length === 0) {
+    if (allNews.length === 0) {
         dataNotFound(categoryContainer);
     }
-    categoryItem.forEach(item => {
-        console.log(item);
+    allNews.forEach(item => {
+
         const div = document.createElement('div');
         div.style.backgroundColor = 'white';
         div.innerHTML = `
-            <div class="row p-3 mb-5">
-               <div class="col-sm-12 col-lg-3">
+            <div data-bs-toggle="modal" href="#exampleModalToggle" onclick=getNewsDetailsById('${item._id}') class="row p-3 mb-5">
+               <div class="col-sm-12 col-lg-3 mb-sm-5 mb-lg-0">
                     <img src="${item.thumbnail_url}" class="img-fluid rounded-start w-100" alt="...">
                 </div>
                 <div class="col-sm-12 col-lg-9">
@@ -77,8 +87,28 @@ const displayCategories = (categoryItem) => {
     toggleSpinner(false)
 }
 
+const getNewsDetailsById = async (news_id) => {
+    const url = `https://openapi.programming-hero.com/api/news/${news_id}`
+    const res = await fetch(url);
+    const data = await res.json();
+    displayNewsDetails(data.data[0]);
+}
+const displayNewsDetails = (data) => {
+    console.log(data);
+    const newsTitle = document.getElementById('news-title');
+    newsTitle.innerHTML = `
+    <p><strong>Title</strong> : ${data.title}</p>
+    `;
+    const newsDetails = document.getElementById('news-details');
+    newsDetails.innerHTML = `
+       <img style="width:200px;border-radius:50%" src="${data.author.img}" alt=""/>
+       <p>author name : <strong>${data.author.name}</strong></p>
+       <p>total view : <strong>${data.total_view}</strong></p>
+    `
+}
+
 // data not found error message is here
-const dataNotFound = (categoryContainer, categoryItem) => {
+const dataNotFound = (categoryContainer) => {
     const div = document.createElement('div');
     div.innerHTML = `
     <h1 class='text-warning text-center'>There is no data found</h1>
@@ -96,5 +126,4 @@ const toggleSpinner = isLoading => {
         spinner.classList.add('d-none');
     };
 }
-getCategoryById('01')
-category();
+getNewsById('01')
