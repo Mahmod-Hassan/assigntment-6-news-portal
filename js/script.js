@@ -47,10 +47,10 @@ const displayNews = (allNews) => {
         return b.total_view - a.total_view;
     });
     countNews(allNews.length);
-    const categoryContainer = document.getElementById('all-news-container');
-    categoryContainer.textContent = ``;
+    const newsContainer = document.getElementById('all-news-container');
+    newsContainer.textContent = ``;
     if (allNews.length === 0) {
-        dataNotFound(categoryContainer);
+        dataNotFound(newsContainer);
     }
     allNews.forEach(item => {
 
@@ -94,7 +94,7 @@ const displayNews = (allNews) => {
                 </div>
             </div>
         `;
-        categoryContainer.appendChild(div);
+        newsContainer.appendChild(div);
     });
     toggleSpinner(false)
 }
