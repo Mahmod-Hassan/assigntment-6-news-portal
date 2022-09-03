@@ -1,3 +1,4 @@
+// load all categories button
 const loadCategoryButton = () => {
     fetch('https://openapi.programming-hero.com/api/news/categories')
         .then(res => res.json())
@@ -7,6 +8,7 @@ const loadCategoryButton = () => {
             throw (err);
         })
 };
+//call the above function
 loadCategoryButton();
 
 const displayCategoryButton = (categories) => {
@@ -36,7 +38,10 @@ const getNewsById = async (category_id) => {
         throw (err)
     }
 
-}
+};
+
+
+// display all news dynamically
 const displayNews = (allNews) => {
     countNews(allNews.length);
     const categoryContainer = document.getElementById('all-news-container');
@@ -69,7 +74,7 @@ const displayNews = (allNews) => {
                             </div>
                             <div>
                            <i class="fa-regular fa-eye"></i>
-                           <span>${item.total_view ? item.total_view : 0}</span>
+                           <span>${item.total_view ? item.total_view + 'M' : 0}</span>
                             </div>
                             <div>
                                  <i class="fa-solid fa-star"></i>
@@ -91,12 +96,14 @@ const displayNews = (allNews) => {
     toggleSpinner(false)
 }
 
+// get particular news by id
 const getNewsDetailsById = async (news_id) => {
     const url = `https://openapi.programming-hero.com/api/news/${news_id}`
     const res = await fetch(url);
     const data = await res.json();
     displayNewsDetails(data.data[0]);
 }
+// display news details with modal
 const displayNewsDetails = (data) => {
     console.log(data);
     const newsTitle = document.getElementById('news-title');
@@ -107,7 +114,7 @@ const displayNewsDetails = (data) => {
     newsDetails.innerHTML = `
        <img style="width:200px;border-radius:50%" src="${data.author.img}" alt=""/>
        <p>author name : <strong>${data.author.name ? data.author.name : 'not found'}</strong></p>
-       <p>total view : <strong>${data.total_view ? data.total_view : 'not found'}</strong></p>
+       <p>total view : <strong>${data.total_view ? data.total_view + 'M' : 'not found'}</strong></p>
     `
 }
 
@@ -129,5 +136,7 @@ const toggleSpinner = isLoading => {
     } else {
         spinner.classList.add('d-none');
     };
-}
-getNewsById('01')
+};
+// calling getNewsById function to get default value
+getNewsById('01');
+
