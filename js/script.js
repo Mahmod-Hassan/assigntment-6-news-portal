@@ -9,7 +9,7 @@ const displayCategoryButton = (categories) => {
     categories.forEach(category => {
         const div = document.createElement('div');
         div.innerHTML = `
-        <button onclick=getCategoryById("${category.category_id}") class='btn light'>${category.category_name}</button>
+        <button onclick=getCategoryById("${category.category_id}") class='btn btn-outline-light'>${category.category_name}</button>
         `
         categoryButtonContainer.appendChild(div);
     })
