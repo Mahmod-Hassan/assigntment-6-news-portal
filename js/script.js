@@ -59,13 +59,13 @@ const displayNews = (allNews) => {
                                     <img style="width:70px; border-radius:50%" src="${item.author.img}"/>
                                 </div>
                                 <div>
-                                    <small>${item.author.name}</small><br/>
+                                    <small>${item.author.name ? item.author.name : 'no name found'}</small><br/>
                                     <small>${item.author.published_date}</small>
                                 </div>
                             </div>
                             <div>
                            <i class="fa-regular fa-eye"></i>
-                           <span>${item.total_view}</span>
+                           <span>${item.total_view ? item.total_view : 0}</span>
                             </div>
                             <div>
                                  <i class="fa-solid fa-star"></i>
@@ -102,8 +102,8 @@ const displayNewsDetails = (data) => {
     const newsDetails = document.getElementById('news-details');
     newsDetails.innerHTML = `
        <img style="width:200px;border-radius:50%" src="${data.author.img}" alt=""/>
-       <p>author name : <strong>${data.author.name}</strong></p>
-       <p>total view : <strong>${data.total_view}</strong></p>
+       <p>author name : <strong>${data.author.name ? data.author.name : 'not found'}</strong></p>
+       <p>total view : <strong>${data.total_view ? data.total_view : 'not found'}</strong></p>
     `
 }
 
