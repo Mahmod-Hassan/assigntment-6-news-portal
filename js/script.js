@@ -43,6 +43,9 @@ const getNewsById = async (category_id) => {
 
 // display all news dynamically
 const displayNews = (allNews) => {
+    const sortArray = allNews.sort(function (a, b) {
+        return b.total_view - a.total_view;
+    });
     countNews(allNews.length);
     const categoryContainer = document.getElementById('all-news-container');
     categoryContainer.textContent = ``;
@@ -105,7 +108,6 @@ const getNewsDetailsById = async (news_id) => {
 }
 // display news details with modal
 const displayNewsDetails = (data) => {
-    console.log(data);
     const newsTitle = document.getElementById('news-title');
     newsTitle.innerHTML = `
     <p><strong>Title</strong> : ${data.title}</p>
